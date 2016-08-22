@@ -5,6 +5,8 @@
  */
 package proyecto_ejercicio14;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author GABRIEL
@@ -47,6 +49,12 @@ public class Principal extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jLabel2.setText("Digite cuántos días duró en el hotel:");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, -1, -1));
+
+        txtDays.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDaysKeyTyped(evt);
+            }
+        });
         jPanel1.add(txtDays, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 54, 90, 30));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
@@ -54,9 +62,19 @@ public class Principal extends javax.swing.JFrame {
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, -1, -1));
 
         cmdBorrar.setText("Borrar");
+        cmdBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdBorrarActionPerformed(evt);
+            }
+        });
         jPanel1.add(cmdBorrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 160, 90, 30));
 
         cmdCalcular.setText("Calcular");
+        cmdCalcular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdCalcularActionPerformed(evt);
+            }
+        });
         jPanel1.add(cmdCalcular, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 110, 90, 30));
 
         txtTotal.setEditable(false);
@@ -75,6 +93,42 @@ public class Principal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void cmdBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdBorrarActionPerformed
+        // TODO add your handling code here:
+        txtDays.setText("");
+        txtTotal.setText("");
+        txtDays.requestFocusInWindow();
+    }//GEN-LAST:event_cmdBorrarActionPerformed
+
+    private void txtDaysKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDaysKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c)) {
+            getToolkit().beep();
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtDaysKeyTyped
+
+    private void cmdCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdCalcularActionPerformed
+        // TODO add your handling code here:
+        
+        if (txtDays.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Campo vacío. Por favor llénelo", "ERROR", JOptionPane.ERROR_MESSAGE);
+            txtDays.requestFocusInWindow();
+        }
+        else if (txtDays.getText().equals("0")) {
+            JOptionPane.showMessageDialog(this, "Debió durar por lo menos un día en el hotel", "ERROR", JOptionPane.ERROR_MESSAGE);
+            txtDays.setText("");
+            txtDays.requestFocusInWindow();
+        }
+        else { 
+            int days, total;
+            days = Integer.parseInt(txtDays.getText());
+            total = (days - 1) * 200000 + 100000;
+            txtTotal.setText(""+total);
+        }
+    }//GEN-LAST:event_cmdCalcularActionPerformed
 
     /**
      * @param args the command line arguments
